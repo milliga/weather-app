@@ -89,7 +89,7 @@
 .seven-day {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 1em 2em 1em 1em;
 }
 
@@ -102,6 +102,36 @@
 .three-day-info {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     width: 70%;
     padding-top: 1em;
+}
+
+.three-day-high, .three-day-low {
+    width: 100%;
+    font-weight: bold;
+}
+
+.three-day-high {
+    font-size: xx-large;
+}
+
+.three-day-low {
+    font-size: x-large;
+}
+
+.three-day-precip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.seven-day-low {
+    padding-left: 10%;
+}
+
+.seven-day-precip {
+    margin-left: auto;
 }
