@@ -6,7 +6,8 @@
     width: 100vw;
     height: 100%;
     background-color: #D0C3F0;
-    background-image: linear-gradient(0deg, #f0c3f0 0%, #97D9E1 100%);
+    background-image: linear-gradient(0deg, #e3f3f5 0%, #97D9E1 100%);
+    background-attachment: fixed;
 }
 
 .current-weather-container, .three-day-weather-container, .seven-day-weather-container {
@@ -134,4 +135,18 @@
 
 .seven-day-precip {
     margin-left: auto;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    min-height: 100vh;
+}
+
+.loading-icon {
+    height: 10%;
+    width: 10%;
+    animation: fa-spin 1.3s infinite linear;
 }

@@ -3,7 +3,7 @@ import "./../../GlobalStyles.scss";
 import { getWeather, getLocationFromCoords } from '../../api/index';
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDroplet } from "@fortawesome/free-solid-svg-icons";
+import { faDroplet, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Moment from "react-moment";
 
 export const Weather = () => {
@@ -66,7 +66,11 @@ export const Weather = () => {
 
     return (
         <>
-            {isLoading ? (<></>) : (
+            {isLoading ? (
+                <div className="loading">
+                    <FontAwesomeIcon className="loading-icon" icon={faSpinner} color="white"/>
+                </div>
+            ) : (
                 <div className="weather-container">
                     <div className="current-weather-container">
                         <div className="current-weather border-shadow">
