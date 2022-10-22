@@ -50,7 +50,7 @@
     font-weight: bold;
 }
 
-.weather-days {
+.three-day-weather-list {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -166,4 +166,41 @@
 		1px -1px 0 rgb(73, 73, 73),
 		-1px 1px 0 rgb(73, 73, 73),
 		1px 1px 0 rgb(73, 73, 73);
+}
+
+.three-day-horizontal-divider {
+    display: none;
+    border-top: 1px solid #9b9b9b;
+    width: 70%;
+}
+
+@media only screen and (max-width: 900px) {
+    .vertical-divider {
+        display: none;
+    }
+    .three-day-weather-list {
+        flex-wrap: wrap;
+    }
+    .three-day-horizontal-divider {
+        display: flex;
+    }
+    .three-day {
+        padding: 20px 0px 20px 0px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .seven-day {
+        flex-wrap: wrap;
+    }
+    .seven-day-precip {
+        width: 100%;
+    }    
+    .seven-day-low {
+        width: 100%;
+        padding-left: 0px;
+    }
+    .seven-day-high {
+        width: 100%;
+    }
 }

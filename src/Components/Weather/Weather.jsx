@@ -97,9 +97,7 @@ export const Weather = () => {
                         <div className="current-weather border-shadow">
                             <h2 className="weather-title">Current Weather</h2>
                             <span className="location">{locationFromCoords.address.city}, {locationFromCoords.address.state}</span>
-                            <span className="temperature">
-                                {parseInt(dailyWeather.hourly.temperature_2m[time])}°F
-                            </span>
+                            <span className="temperature">{parseInt(dailyWeather.hourly.temperature_2m[time])}°F</span>
                             <div className="high-low">
                                 <span style={{ display: 'block' }}>High & Low</span>
                                 <span>{parseInt(dailyWeather.daily.temperature_2m_max[0])}°F • {parseInt(dailyWeather.daily.temperature_2m_min[0])}°F</span>
@@ -113,7 +111,7 @@ export const Weather = () => {
                         <div className="three-day-weather border-shadow">
                             <h2 className="weather-title">Three Day Weather</h2>
                             <span className="location">{locationFromCoords.address.city}, {locationFromCoords.address.state}</span>
-                            <div className="weather-days">
+                            <div className="three-day-weather-list">
                                 <div className="three-day">
                                     <span className="day-title">Today</span>
                                     <div className="three-day-info">
@@ -126,6 +124,7 @@ export const Weather = () => {
                                     </div>
                                 </div>
                                 <div className="vertical-divider"></div>
+                                <div className="three-day-horizontal-divider"></div>
                                 <div className="three-day">
                                     <span className="day-title">Tomorrow</span>
                                     <div className="three-day-info">
@@ -138,6 +137,7 @@ export const Weather = () => {
                                     </div>
                                 </div>
                                 <div className="vertical-divider"></div>
+                                <div className="three-day-horizontal-divider"></div>
                                 <div className="three-day">
                                     <span className="day-title">Day After Tomorrow</span>
                                     <div className="three-day-info">
@@ -161,7 +161,7 @@ export const Weather = () => {
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
                                     <Moment date={daysOfWeek[0]} format="MM/DD/YYYY" style={{ paddingRight: '10%' }}></Moment>
-                                    <span>High  {parseInt(allWeather.daily.temperature_2m_max[0])}°F</span>
+                                    <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[0])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[0])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon icon={faDroplet}/>
@@ -172,7 +172,7 @@ export const Weather = () => {
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
                                     <Moment date={daysOfWeek[1]} format="MM/DD/YYYY" style={{ paddingRight: '10%' }}></Moment>
-                                    <span>High  {parseInt(allWeather.daily.temperature_2m_max[1])}°F</span>
+                                    <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[1])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[1])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon icon={faDroplet}/>
@@ -182,7 +182,7 @@ export const Weather = () => {
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
                                     <Moment date={daysOfWeek[2]} format="MM/DD/YYYY" style={{ paddingRight: '10%' }}></Moment>
-                                    <span>High  {parseInt(allWeather.daily.temperature_2m_max[2])}°F</span>
+                                    <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[2])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[2])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon icon={faDroplet}/>
@@ -192,7 +192,7 @@ export const Weather = () => {
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
                                     <Moment date={daysOfWeek[3]} format="MM/DD/YYYY" style={{ paddingRight: '10%' }}></Moment>
-                                    <span>High  {parseInt(allWeather.daily.temperature_2m_max[3])}°F</span>
+                                    <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[3])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[3])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon icon={faDroplet}/>
@@ -202,7 +202,7 @@ export const Weather = () => {
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
                                     <Moment date={daysOfWeek[4]} format="MM/DD/YYYY" style={{ paddingRight: '10%' }}></Moment>
-                                    <span>High  {parseInt(allWeather.daily.temperature_2m_max[4])}°F</span>
+                                    <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[4])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[4])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon icon={faDroplet}/>
@@ -212,7 +212,7 @@ export const Weather = () => {
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
                                     <Moment date={daysOfWeek[5]} format="MM/DD/YYYY" style={{ paddingRight: '10%' }}></Moment>
-                                    <span>High  {parseInt(allWeather.daily.temperature_2m_max[5])}°F</span>
+                                    <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[5])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[5])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon icon={faDroplet}/>
@@ -222,7 +222,7 @@ export const Weather = () => {
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
                                     <Moment date={daysOfWeek[6]} format="MM/DD/YYYY" style={{ paddingRight: '10%' }}></Moment>
-                                    <span>High  {parseInt(allWeather.daily.temperature_2m_max[6])}°F</span>
+                                    <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[6])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[6])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon icon={faDroplet}/>
