@@ -14,6 +14,7 @@ export const Weather = () => {
     const[time, setTime] = useState(12);
     const[precipitationAveragePerDay, setPrecipitationAveragePerDay] = useState([]);
     const[daysOfWeek, setDaysOfWeek] = useState([]);
+    const[hasLocation, setHasLocation] = useState(false);
 
     useEffect(() => {
         setDaysOfWeek([]);
@@ -36,15 +37,26 @@ export const Weather = () => {
             const nextWeekDate = new Date(todayDate.getTime() + 7 * 24 * 60 * 60 * 1000).toJSON().slice(0, 10).replace(/-/g, '-');
             const timeNow = todayDate.getHours() - 1;
             setTime(timeNow)
-            const loc = await getLocation();
-            const todayData = await getWeather(loc.coords.latitude, loc.coords.longitude, todayDateFormatted, todayDateFormatted);
-            const allData = await getWeather(loc.coords.latitude, loc.coords.longitude, todayDateFormatted, nextWeekDate)
-            const locationName = await getLocationFromCoords(loc.coords.latitude, loc.coords.longitude);
-            setDailyWeather(todayData);
-            setallWeather(allData);
-            setLocationFromCoords(locationName);
-            getPrecipAverage(allData);
-            setIsLoading(false);
+            let loc = {};
+            try {
+                loc = await getLocation();
+                setHasLocation(true);
+            } catch (locError) {
+                setHasLocation(false);
+                //console.log(locError);
+            }
+            try {
+                const todayData = await getWeather(loc.coords.latitude, loc.coords.longitude, todayDateFormatted, todayDateFormatted);
+                const allData = await getWeather(loc.coords.latitude, loc.coords.longitude, todayDateFormatted, nextWeekDate)
+                const locationName = await getLocationFromCoords(loc.coords.latitude, loc.coords.longitude);
+                setDailyWeather(todayData);
+                setallWeather(allData);
+                setLocationFromCoords(locationName);
+                getPrecipAverage(allData);
+                setIsLoading(false);
+            } catch (dataError) {
+                //console.log(dataError);
+            }
         }
         fetchData();
     }, [])
@@ -67,11 +79,20 @@ export const Weather = () => {
     return (
         <>
             {isLoading ? (
-                <div className="loading">
-                    <FontAwesomeIcon className="loading-icon" icon={faSpinner} color="white"/>
-                </div>
+                <>
+                    {hasLocation ? (
+                        <div className="loading">
+                            <FontAwesomeIcon className="loading-icon" icon={faSpinner} color="white"/>
+                        </div>
+                    ) : (
+                        <div className="location-permission">
+                            <span className="location-permission-text">Please allow location permissions.</span>
+                        </div>
+                    )}
+                </>
+
             ) : (
-                <div className="weather-container">
+                <div className="weather-container background">
                     <div className="current-weather-container">
                         <div className="current-weather border-shadow">
                             <h2 className="weather-title">Current Weather</h2>
