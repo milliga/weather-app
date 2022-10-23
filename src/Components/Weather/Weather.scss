@@ -19,7 +19,7 @@
 .current-weather, .three-day-weather, .seven-day-weather {
     display: flex;
     flex-wrap: wrap;
-    width: 80vw;
+    width: 65%;
     height: auto;
     padding: 0px 0px 20px 0px;
     background-color: white;
@@ -210,6 +210,15 @@
     .seven-day-precip {
         padding-left: 15px;
         white-space: nowrap;
+    }
+    .current-weather, .three-day-weather, .seven-day-weather {
+        width: 70vw;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .current-weather, .three-day-weather, .seven-day-weather {
+        width: 80vw;
     }
 }
 
