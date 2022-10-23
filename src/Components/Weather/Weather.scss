@@ -19,7 +19,7 @@
 .current-weather, .three-day-weather, .seven-day-weather {
     display: flex;
     flex-wrap: wrap;
-    width: 50%;
+    width: 80vw;
     height: auto;
     padding: 0px 0px 20px 0px;
     background-color: white;
@@ -48,6 +48,14 @@
 
 .high-low {
     font-weight: bold;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.current-rain {
+    margin-left: auto;
+    padding-right: 1em;
 }
 
 .three-day-weather-list {
@@ -128,7 +136,11 @@
 }
 
 .seven-day-low {
-    padding-left: 10%;
+    margin: 0 auto 0 auto;
+}
+
+.seven-day-high {
+    margin: 0 auto 0 auto;
 }
 
 .seven-day-precip {
@@ -174,6 +186,14 @@
     width: 70%;
 }
 
+.date {
+    margin-right: auto;
+}
+
+.daily-temp {
+    width: 50%;
+}
+
 @media only screen and (max-width: 900px) {
     .vertical-divider {
         display: none;
@@ -187,20 +207,50 @@
     .three-day {
         padding: 20px 0px 20px 0px;
     }
+    .seven-day-precip {
+        padding-left: 15px;
+        white-space: nowrap;
+    }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 700px) {
     .seven-day {
         flex-wrap: wrap;
     }
     .seven-day-precip {
         width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding-top: 10px;
     }    
     .seven-day-low {
-        width: 100%;
+        width: auto;
+        margin: auto;
         padding-left: 0px;
     }
     .seven-day-high {
+        width: auto;
+        margin: auto;
+    }
+    .date {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding-bottom: 10px;
+        padding-right: 0px;
+    }
+    .seven-day-droplet {
+        margin-bottom: 2px;
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .current-rain {
+        width: 100%;
+        padding-top: 1em;
+    }
+    .daily-temp {
         width: 100%;
     }
 }
