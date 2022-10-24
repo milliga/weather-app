@@ -93,13 +93,6 @@
     width: 100%;
 }
 
-.seven-day {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    padding: 1em 2em 1em 1em;
-}
-
 .day-title {
     width: 100%;
     font-size: large;
@@ -135,6 +128,13 @@
     padding-top: 20px;
 }
 
+.seven-day {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding: 1em 1em 1em 1em;
+}
+
 .seven-day-low {
     margin: 0 auto 0 auto;
 }
@@ -144,6 +144,7 @@
 }
 
 .seven-day-precip {
+    width: 9%;
     margin-left: auto;
 }
 

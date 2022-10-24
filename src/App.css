@@ -1,4 +1,6 @@
 .background {
+    height: 100vh;
+    width: 100vw;
     background-color: #e3f3f5;
     background-image: linear-gradient(0deg, #e3f3f5 0%, #97D9E1 100%);
 }

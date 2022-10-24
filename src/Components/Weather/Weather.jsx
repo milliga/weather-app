@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDroplet, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Moment from "react-moment";
+import { Search } from "../Search/Search";
 
 export const Weather = () => {
     const[allWeather, setallWeather] = useState({});
@@ -182,7 +183,7 @@ export const Weather = () => {
                                 </div>
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
-                                    <Moment className="date" date={daysOfWeek[0]} format="MM/DD/YYYY"></Moment>
+                                    <Moment className="date" date={daysOfWeek[2]} format="MM/DD/YYYY"></Moment>
                                     <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[2])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[2])}°F</span>
                                     <div className="seven-day-precip">
@@ -192,7 +193,7 @@ export const Weather = () => {
                                 </div>
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
-                                    <Moment className="date" date={daysOfWeek[0]} format="MM/DD/YYYY"></Moment>
+                                    <Moment className="date" date={daysOfWeek[3]} format="MM/DD/YYYY"></Moment>
                                     <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[3])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[3])}°F</span>
                                     <div className="seven-day-precip">
@@ -202,7 +203,7 @@ export const Weather = () => {
                                 </div>
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
-                                    <Moment className="date" date={daysOfWeek[0]} format="MM/DD/YYYY"></Moment>
+                                    <Moment className="date" date={daysOfWeek[4]} format="MM/DD/YYYY"></Moment>
                                     <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[4])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[4])}°F</span>
                                     <div className="seven-day-precip">
@@ -212,7 +213,7 @@ export const Weather = () => {
                                 </div>
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
-                                    <Moment className="date" date={daysOfWeek[0]} format="MM/DD/YYYY"></Moment>
+                                    <Moment className="date" date={daysOfWeek[5]} format="MM/DD/YYYY"></Moment>
                                     <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[5])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[5])}°F</span>
                                     <div className="seven-day-precip">
@@ -222,7 +223,7 @@ export const Weather = () => {
                                 </div>
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
-                                    <Moment className="date" date={daysOfWeek[0]} format="MM/DD/YYYY"></Moment>
+                                    <Moment className="date" date={daysOfWeek[6]} format="MM/DD/YYYY"></Moment>
                                     <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[6])}°F</span>
                                     <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[6])}°F</span>
                                     <div className="seven-day-precip">
