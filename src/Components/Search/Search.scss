@@ -4,7 +4,7 @@
     align-items: center;
     flex-wrap: wrap;
     width: 100vw;
-    height: 100%;
+    height: 100vh;
 }
 
 .search {
@@ -15,16 +15,17 @@
 }
 
 .search-bar {
-    width: 40%;
+    width: 50%;
     height: 10%;
     margin: auto;
 }
-.location {
+
+.search-location {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: auto;
-    padding-top: 5%;
+    padding-top: 5em;
 }
 
 .location-icon {
@@ -38,4 +39,30 @@
     border-radius: 20px;
     background-color: #cceff3;
     text-align: center;
+}
+
+.full {
+    display: none;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}
+
+.zoom {
+    transition: .2s;
+}
+
+.zoom:hover {
+    transform: scale(1.2);
+    z-index: 1;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 560px) {
+    .search-bar {
+        width: 70%;
+    }
+    .search-location {
+        padding-top: 20%;
+    }
 }

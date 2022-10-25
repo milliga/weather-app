@@ -17,10 +17,27 @@ export const getLocationFromCoords = async (latitude, longitude) => {
                 lon: longitude,
             },
             headers: {
-                'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
+                'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_WEATHER_KEY,
                 'X-RapidAPI-Host': 'forward-reverse-geocoding.p.rapidapi.com'
             }
         });
+        return response.data;
+    } catch (error) {
+        //console.log(error);
+    }
+}
+
+export const getGeocodeResults = async (search) => {
+    try {
+        const response = await axios.get(`https://forward-reverse-geocoding.p.rapidapi.com/v1/search`, {
+            params: {
+                q: `${search}`, 'accept-language': 'en', polygon_threshold: '0.0',
+            },
+            headers: {
+                'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_GEOCODE_KEY,
+                'X-RapidAPI-Host': 'forward-reverse-geocoding.p.rapidapi.com',
+            }
+        })
         return response.data;
     } catch (error) {
         //console.log(error);

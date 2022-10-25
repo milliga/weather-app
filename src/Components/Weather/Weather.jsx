@@ -1,11 +1,11 @@
 import "./Weather.scss";
 import "./../../GlobalStyles.scss";
-import { getWeather, getLocationFromCoords } from '../../api/index';
-import { useEffect, useState } from "react";
+import { getWeather, getLocationFromCoords, getGeocodeResults } from '../../api/index';
+import { useEffect, useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDroplet, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Moment from "react-moment";
-import { Search } from "../Search/Search";
+import { SearchContext } from '../../Contexts/SearchContext';
 
 export const Weather = () => {
     const[allWeather, setallWeather] = useState({});
@@ -15,7 +15,9 @@ export const Weather = () => {
     const[time, setTime] = useState(12);
     const[precipitationAveragePerDay, setPrecipitationAveragePerDay] = useState([]);
     const[daysOfWeek, setDaysOfWeek] = useState([]);
-    const[hasLocation, setHasLocation] = useState(false);
+
+    const { searchText, hasLocation, usingCoords } = useContext(SearchContext);
+    const delay = ms => new Promise(res => setTimeout(res, ms));
 
     useEffect(() => {
         setDaysOfWeek([]);
@@ -31,6 +33,42 @@ export const Weather = () => {
                 navigator.geolocation.getCurrentPosition(resolve, reject);
             })
         }
+        const fetchWeatherFromSearch = async (todayDateFormatted, nextWeekDate) => {
+            const locationWeatherObject = {};
+            locationWeatherObject.location = await getGeocodeResults(searchText);
+            locationWeatherObject.weather = await getWeather(locationWeatherObject.location[0].lat, locationWeatherObject.location[0].lon, todayDateFormatted, todayDateFormatted);
+            locationWeatherObject.weatherAll = await getWeather(locationWeatherObject.location[0].lat, locationWeatherObject.location[0].lon, todayDateFormatted, nextWeekDate);
+            await delay(1005);
+            locationWeatherObject.locationName = await getLocationFromCoords(locationWeatherObject.location[0].lat, locationWeatherObject.location[0].lon);
+            
+            return locationWeatherObject;
+        }
+        const fetchWeatherFromCoords = async (todayDateFormatted, nextWeekDate) => {
+            const locationWeatherObject = {};
+            locationWeatherObject.location = await getLocation();
+            locationWeatherObject.weather = await getWeather(locationWeatherObject.location.coords.latitude, locationWeatherObject.location.coords.longitude, todayDateFormatted, todayDateFormatted);
+            locationWeatherObject.weatherAll = await getWeather(locationWeatherObject.location.coords.latitude, locationWeatherObject.location.coords.longitude, todayDateFormatted, nextWeekDate);
+            await delay(1005);
+            locationWeatherObject.locationName = await getLocationFromCoords(locationWeatherObject.location.coords.latitude, locationWeatherObject.location.coords.longitude);
+            return locationWeatherObject;
+        }
+        const setData = async (todayDateFormatted, nextWeekDate) => {
+            if(usingCoords) {
+                const weatherDetails = await fetchWeatherFromCoords(todayDateFormatted, nextWeekDate);
+                setDailyWeather(weatherDetails.weather);
+                setallWeather(weatherDetails.weatherAll);
+                setLocationFromCoords(weatherDetails.locationName);
+                getPrecipAverage(weatherDetails.weatherAll);
+            }
+            else {
+                const weatherDetails = await fetchWeatherFromSearch(todayDateFormatted, nextWeekDate);
+                setDailyWeather(weatherDetails.weather);
+                setallWeather(weatherDetails.weatherAll);
+                setLocationFromCoords(weatherDetails.locationName);
+                getPrecipAverage(weatherDetails.weatherAll);
+            }
+            
+        }
         const fetchData = async () => {
             setPrecipitationAveragePerDay([]);
             const todayDate = new Date();
@@ -38,31 +76,20 @@ export const Weather = () => {
             const nextWeekDate = new Date(todayDate.getTime() + 7 * 24 * 60 * 60 * 1000).toJSON().slice(0, 10).replace(/-/g, '-');
             const timeNow = todayDate.getHours() - 1;
             setTime(timeNow)
-            let loc = {};
             try {
-                loc = await getLocation();
-                setHasLocation(true);
-            } catch (locError) {
-                setHasLocation(false);
-                //console.log(locError);
-            }
-            try {
-                const todayData = await getWeather(loc.coords.latitude, loc.coords.longitude, todayDateFormatted, todayDateFormatted);
-                const allData = await getWeather(loc.coords.latitude, loc.coords.longitude, todayDateFormatted, nextWeekDate)
-                const locationName = await getLocationFromCoords(loc.coords.latitude, loc.coords.longitude);
-                setDailyWeather(todayData);
-                setallWeather(allData);
-                setLocationFromCoords(locationName);
-                getPrecipAverage(allData);
+                /* const todayData = await getWeather(locationDetails.lat, locationDetails.lon, todayDateFormatted, todayDateFormatted);
+                const allData = await getWeather(locationDetails.lat, locationDetails.lon, todayDateFormatted, nextWeekDate)
+                const locationName = await getLocationFromCoords(locationDetails.lat, locationDetails.lon); */
+                await setData(todayDateFormatted, nextWeekDate);
                 setIsLoading(false);
             } catch (dataError) {
                 //console.log(dataError);
             }
         }
         fetchData();
-    }, [])
+    }, [hasLocation, usingCoords])
 
-    const getPrecipAverage = (weather) => { 
+    const getPrecipAverage = async (weather) => { 
         let tempData = [];
         let dayPrecipMax = 0;
         for(let i = 0; i < 161; i++) {
@@ -81,15 +108,9 @@ export const Weather = () => {
         <>
             {isLoading ? (
                 <>
-                    {hasLocation ? (
-                        <div className="loading">
-                            <FontAwesomeIcon className="loading-icon" icon={faSpinner} color="white"/>
-                        </div>
-                    ) : (
-                        <div className="location-permission">
-                            <span className="location-permission-text">Please allow location permissions.</span>
-                        </div>
-                    )}
+                    <div className="loading">
+                        <FontAwesomeIcon className="loading-icon" icon={faSpinner} color="white"/>
+                    </div>
                 </>
 
             ) : (
