@@ -20,7 +20,7 @@
     margin: auto;
 }
 
-.search-location {
+.search-location, .declined-location {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,6 +56,11 @@
     transform: scale(1.2);
     z-index: 1;
     cursor: pointer;
+}
+
+.declined-location {
+    font-size: 1em;
+    padding: 5em 1em 1em 1em;
 }
 
 @media only screen and (max-width: 560px) {

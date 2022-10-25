@@ -4,6 +4,7 @@ import { getWeather, getLocationFromCoords, getGeocodeResults } from '../../api/
 import { useEffect, useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDroplet, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Moment from "react-moment";
 import { SearchContext } from '../../Contexts/SearchContext';
 
@@ -16,7 +17,7 @@ export const Weather = () => {
     const[precipitationAveragePerDay, setPrecipitationAveragePerDay] = useState([]);
     const[daysOfWeek, setDaysOfWeek] = useState([]);
 
-    const { searchText, hasLocation, usingCoords } = useContext(SearchContext);
+    const { searchText, setSearchText, hasLocation, setHasLocation, usingCoords, setUsingCoords, setDeclinedLocation } = useContext(SearchContext);
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
     useEffect(() => {
@@ -45,7 +46,14 @@ export const Weather = () => {
         }
         const fetchWeatherFromCoords = async (todayDateFormatted, nextWeekDate) => {
             const locationWeatherObject = {};
-            locationWeatherObject.location = await getLocation();
+            try {
+                locationWeatherObject.location = await getLocation();
+            }
+            catch (error) {
+                setDeclinedLocation(true);
+                setUsingCoords(false);
+                setHasLocation(false);
+            }
             locationWeatherObject.weather = await getWeather(locationWeatherObject.location.coords.latitude, locationWeatherObject.location.coords.longitude, todayDateFormatted, todayDateFormatted);
             locationWeatherObject.weatherAll = await getWeather(locationWeatherObject.location.coords.latitude, locationWeatherObject.location.coords.longitude, todayDateFormatted, nextWeekDate);
             await delay(1005);
@@ -87,7 +95,7 @@ export const Weather = () => {
             }
         }
         fetchData();
-    }, [hasLocation, usingCoords])
+    }, [])
 
     const getPrecipAverage = async (weather) => { 
         let tempData = [];
@@ -104,6 +112,15 @@ export const Weather = () => {
         setPrecipitationAveragePerDay(tempData);
     }
 
+    const goBack = async () => {
+        setHasLocation(false);
+        setSearchText("");
+        setUsingCoords(false);
+        setDailyWeather({});
+        setallWeather({});
+        setLocationFromCoords({});
+    }
+
     return (
         <>
             {isLoading ? (
@@ -115,6 +132,9 @@ export const Weather = () => {
 
             ) : (
                 <div className="weather-container background">
+                    <div className="back-arrow" onClick={goBack}>
+                        <ArrowBackIcon className="back-arrow-icon" sx={{ fontSize: '3em' }}/>
+                    </div>
                     <div className="current-weather-container">
                         <div className="current-weather border-shadow">
                             <h2 className="weather-title">Current Weather</h2>

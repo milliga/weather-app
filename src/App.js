@@ -7,10 +7,11 @@ import { useEffect, useState } from 'react';
 function App() {
     const[searchText, setSearchText] = useState("");
     const[hasLocation, setHasLocation] = useState(false);
-    const[usingCoords, setUsingCoords] = useState(false);    
+    const[usingCoords, setUsingCoords] = useState(false);
+    const[declinedLocation, setDeclinedLocation] = useState(false);
 
     return (
-        <SearchContext.Provider value={{ searchText, setSearchText, hasLocation, setHasLocation, usingCoords, setUsingCoords }}>
+        <SearchContext.Provider value={{ searchText, setSearchText, hasLocation, setHasLocation, usingCoords, setUsingCoords, declinedLocation, setDeclinedLocation }}>
             <div className='background'>
                 {hasLocation ? (
                     <Weather />

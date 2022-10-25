@@ -195,6 +195,18 @@
     width: 50%;
 }
 
+.back-arrow {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding: 10px 0px 0px 10px;
+}
+
+.back-arrow-icon {
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 900px) {
     .vertical-divider {
         display: none;
