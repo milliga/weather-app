@@ -17,7 +17,7 @@ export const Weather = () => {
     const[precipitationAveragePerDay, setPrecipitationAveragePerDay] = useState([]);
     const[daysOfWeek, setDaysOfWeek] = useState([]);
 
-    const { searchText, setSearchText, hasLocation, setHasLocation, usingCoords, setUsingCoords, setDeclinedLocation } = useContext(SearchContext);
+    const { searchText, setSearchText, setHasLocation, usingCoords, setUsingCoords, setDeclinedLocation } = useContext(SearchContext);
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
     useEffect(() => {

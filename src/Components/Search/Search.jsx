@@ -1,11 +1,15 @@
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import TextField from '@mui/material/TextField';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { SearchContext } from '../../Contexts/SearchContext';
 import "./Search.scss";
+import { ReactComponent as CloudIcon } from '../../Page Icons/reshot-icon-cloud-T74KFVEM65.svg';
+import { ReactComponent as SunIcon } from '../../Page Icons/reshot-icon-sunshine-Z2XTGEPC9Q.svg';
 
 export const Search = () => {
-    const { setSearchText, setHasLocation, setUsingCoords, declinedLocation, setDeclinedLocation } = useContext(SearchContext);
+    const[changeAnimationStyle, setChangeAnimationStyle] = useState("sun");
+
+    const { setSearchText, setHasLocation, setUsingCoords, declinedLocation } = useContext(SearchContext);
 
     const setLocation = () => {
         setHasLocation(true);
@@ -17,9 +21,21 @@ export const Search = () => {
         setHasLocation(true);
     }
 
+    const changeAnimation = (animationStyle) => {
+        setChangeAnimationStyle(animationStyle);
+    }
+
     return (
         <>
             <div className='search-container'>
+                <div className='cloud-sun'>
+                    <div className='cloud'>
+                        <CloudIcon className='cloud-icon' onMouseEnter={() => changeAnimation("sun-rise")} onMouseLeave={() => changeAnimation("sun-set")}/>
+                    </div>
+                    <div className='sun'>
+                        <SunIcon className={changeAnimationStyle} />
+                    </div>
+                </div>
                 <form className='search' onSubmit={setLocation}>
                     <TextField 
                         className='search-bar'
