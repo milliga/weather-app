@@ -57,7 +57,7 @@ export const Search = () => {
                     <div className='search-location zoom' onClick={useCoords}>
                         <div className='location-icon'>
                             <span style={{ width: '100%', fontSize: 'large' }}>Get location</span>
-                            <GpsFixedIcon style={{ paddingBottom: '20px' }} fontSize='large' />
+                            <GpsFixedIcon style={{ paddingBottom: '20px', position: 'sticky' }} fontSize='large' />
                         </div>
                     </div>
                 )}
