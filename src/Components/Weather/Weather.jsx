@@ -1,11 +1,11 @@
-import "./Weather.scss";
-import "./../../GlobalStyles.scss";
+import './Weather.scss';
+import './../../GlobalStyles.scss';
 import { getWeather, getLocationFromCoords, getGeocodeResults } from '../../api/index';
 import { useEffect, useState, useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDroplet, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDroplet, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Moment from "react-moment";
+import Moment from 'react-moment';
 import { SearchContext } from '../../Contexts/SearchContext';
 
 export const Weather = () => {
@@ -132,13 +132,15 @@ export const Weather = () => {
 
             ) : (
                 <div className="weather-container background">
-                    <div className="back-arrow" onClick={goBack}>
-                        <ArrowBackIcon className="back-arrow-icon" sx={{ fontSize: '3em' }}/>
+                    <div className="back-arrow">
+                        <ArrowBackIcon className="back-arrow-icon" sx={{ fontSize: '3em' }} onClick={goBack}/>
                     </div>
                     <div className="current-weather-container">
                         <div className="current-weather border-shadow">
                             <h2 className="weather-title">Current Weather</h2>
-                            <span className="location">{locationFromCoords.address.city}, {locationFromCoords.address.state}</span>
+                            <span className="location">{locationFromCoords.address.city ? 
+                                locationFromCoords.address.city : locationFromCoords.address.town}, {locationFromCoords.address.state}
+                            </span>
                             <span className="temperature">{parseInt(dailyWeather.hourly.temperature_2m[time])}°F</span>
                             <div className="high-low">
                                 <span style={{ width: '100%' }}>High & Low</span>
@@ -153,7 +155,9 @@ export const Weather = () => {
                     <div className="three-day-weather-container">
                         <div className="three-day-weather border-shadow">
                             <h2 className="weather-title">Three Day Weather</h2>
-                            <span className="location">{locationFromCoords.address.city}, {locationFromCoords.address.state}</span>
+                            <span className="location">{locationFromCoords.address.city ? 
+                                locationFromCoords.address.city : locationFromCoords.address.town}, {locationFromCoords.address.state}
+                            </span>
                             <div className="three-day-weather-list">
                                 <div className="three-day">
                                     <span className="day-title">Today</span>
@@ -199,7 +203,9 @@ export const Weather = () => {
                     <div className="seven-day-weather-container">
                         <div className="seven-day-weather border-shadow">
                             <h2 className="weather-title">Seven Day Weather</h2>
-                            <span className="location">{locationFromCoords.address.city}, {locationFromCoords.address.state}</span>
+                            <span className="location">{locationFromCoords.address.city ? 
+                                locationFromCoords.address.city : locationFromCoords.address.town}, {locationFromCoords.address.state}
+                            </span>
                             <div className="seven-day-weather-list">
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
