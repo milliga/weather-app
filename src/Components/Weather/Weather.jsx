@@ -24,7 +24,7 @@ export const Weather = () => {
         setDaysOfWeek([]);
         let tempDays = [];
         let tempDate = new Date();
-        for(let i = 0; i < 7; i++) {
+        for(let i = 0; i < 8; i++) {
             let date = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate() + i);
             tempDays.push(date);
         }
@@ -100,13 +100,11 @@ export const Weather = () => {
     const getPrecipAverage = async (weather) => { 
         let tempData = [];
         let dayPrecipMax = 0;
-        for(let i = 0; i < 161; i++) {
-            if(i % 23 === 0) {
-                let dayMaxUpdated = dayPrecipMax * 10;
-                let dayMaxString = dayMaxUpdated.toString().match('^-?\\d+(?:\.\\d{0,' + (2 || -1) + '})?')[0];
-                tempData.push(dayMaxString);
-                dayPrecipMax = 0;
-            }
+        for(let i = 1; i <= 8; i++) {
+            let dayMaxUpdated = dayPrecipMax * 10;
+            let dayMaxString = dayMaxUpdated.toString().match('^-?\\d+(?:\.\\d{0,' + (2 || -1) + '})?')[0];
+            tempData.push(dayMaxString);
+            dayPrecipMax = 0;
             dayPrecipMax = Math.max(dayPrecipMax, weather.hourly.precipitation[i]);
         }
         setPrecipitationAveragePerDay(tempData);
@@ -119,6 +117,20 @@ export const Weather = () => {
         setDailyWeather({});
         setallWeather({});
         setLocationFromCoords({});
+    }
+
+    const displayLocationName = () => {
+        var typeOfCity = "";
+        if(typeof locationFromCoords.address.city !== 'undefined') {
+            typeOfCity = locationFromCoords.address.city + ", " + locationFromCoords.address.state;
+        }
+        if(typeof locationFromCoords.address.town !== 'undefined') {
+            typeOfCity = locationFromCoords.address.town + ", " + locationFromCoords.address.state;
+        }
+        if(typeof locationFromCoords.address.hamlet !== 'undefined') {
+            typeOfCity = locationFromCoords.address.hamlet + ", " + locationFromCoords.address.state;
+        }
+        return typeOfCity;
     }
 
     return (
@@ -138,9 +150,7 @@ export const Weather = () => {
                     <div className="current-weather-container">
                         <div className="current-weather border-shadow">
                             <h2 className="weather-title">Current Weather</h2>
-                            <span className="location">{locationFromCoords.address.city ? 
-                                locationFromCoords.address.city : locationFromCoords.address.town}, {locationFromCoords.address.state}
-                            </span>
+                            <span className="location">{displayLocationName()}</span>
                             <span className="temperature">{parseInt(dailyWeather.hourly.temperature_2m[time])}°F</span>
                             <div className="high-low">
                                 <span style={{ width: '100%' }}>High & Low</span>
@@ -155,9 +165,7 @@ export const Weather = () => {
                     <div className="three-day-weather-container">
                         <div className="three-day-weather border-shadow">
                             <h2 className="weather-title">Three Day Weather</h2>
-                            <span className="location">{locationFromCoords.address.city ? 
-                                locationFromCoords.address.city : locationFromCoords.address.town}, {locationFromCoords.address.state}
-                            </span>
+                            <span className="location">{displayLocationName()}</span>
                             <div className="three-day-weather-list">
                                 <div className="three-day">
                                     <span className="day-title">Today</span>
@@ -203,79 +211,77 @@ export const Weather = () => {
                     <div className="seven-day-weather-container">
                         <div className="seven-day-weather border-shadow">
                             <h2 className="weather-title">Seven Day Weather</h2>
-                            <span className="location">{locationFromCoords.address.city ? 
-                                locationFromCoords.address.city : locationFromCoords.address.town}, {locationFromCoords.address.state}
-                            </span>
+                            <span className="location">{displayLocationName()}</span>
                             <div className="seven-day-weather-list">
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
-                                    <Moment className="date" date={daysOfWeek[0]} format="MM/DD/YYYY"></Moment>
-                                    <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[0])}°F</span>
-                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[0])}°F</span>
+                                    <Moment className="date" date={daysOfWeek[1]} format="MM/DD/YYYY"></Moment>
+                                    <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[1])}°F</span>
+                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_min[1])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon className="seven-day-droplet" icon={faDroplet}/>
-                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 6 ? precipitationAveragePerDay[0] : <span>Loading...</span>} inches</span>
+                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 7 ? precipitationAveragePerDay[1] : <span>Loading...</span>} inches</span>
                                     </div>
  
                                 </div>
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
-                                    <Moment className="date" date={daysOfWeek[1]} format="MM/DD/YYYY"></Moment>
-                                    <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[1])}°F</span>
-                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[1])}°F</span>
-                                    <div className="seven-day-precip">
-                                        <FontAwesomeIcon className="seven-day-droplet" icon={faDroplet}/>
-                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 6 ? precipitationAveragePerDay[1] : <span>Loading...</span>} inches</span>
-                                    </div>
-                                </div>
-                                <div className="horizontal-divider"></div>
-                                <div className="seven-day">
                                     <Moment className="date" date={daysOfWeek[2]} format="MM/DD/YYYY"></Moment>
                                     <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[2])}°F</span>
-                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[2])}°F</span>
+                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_min[2])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon className="seven-day-droplet" icon={faDroplet}/>
-                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 6 ? precipitationAveragePerDay[2] : <span>Loading...</span>} inches</span>
+                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 7 ? precipitationAveragePerDay[2] : <span>Loading...</span>} inches</span>
                                     </div>
                                 </div>
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
                                     <Moment className="date" date={daysOfWeek[3]} format="MM/DD/YYYY"></Moment>
                                     <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[3])}°F</span>
-                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[3])}°F</span>
+                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_min[3])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon className="seven-day-droplet" icon={faDroplet}/>
-                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 6 ? precipitationAveragePerDay[3] : <span>Loading...</span>} inches</span>
+                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 7 ? precipitationAveragePerDay[3] : <span>Loading...</span>} inches</span>
                                     </div>
                                 </div>
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
                                     <Moment className="date" date={daysOfWeek[4]} format="MM/DD/YYYY"></Moment>
                                     <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[4])}°F</span>
-                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[4])}°F</span>
+                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_min[4])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon className="seven-day-droplet" icon={faDroplet}/>
-                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 6 ? precipitationAveragePerDay[4] : <span>Loading...</span>} inches</span>
+                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 7 ? precipitationAveragePerDay[4] : <span>Loading...</span>} inches</span>
                                     </div>
                                 </div>
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
                                     <Moment className="date" date={daysOfWeek[5]} format="MM/DD/YYYY"></Moment>
                                     <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[5])}°F</span>
-                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[5])}°F</span>
+                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_min[5])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon className="seven-day-droplet" icon={faDroplet}/>
-                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 6 ? precipitationAveragePerDay[5] : <span>Loading...</span>} inches</span>
+                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 7 ? precipitationAveragePerDay[5] : <span>Loading...</span>} inches</span>
                                     </div>
                                 </div>
                                 <div className="horizontal-divider"></div>
                                 <div className="seven-day">
                                     <Moment className="date" date={daysOfWeek[6]} format="MM/DD/YYYY"></Moment>
                                     <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[6])}°F</span>
-                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_max[6])}°F</span>
+                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_min[6])}°F</span>
                                     <div className="seven-day-precip">
                                         <FontAwesomeIcon className="seven-day-droplet" icon={faDroplet}/>
-                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 6 ? precipitationAveragePerDay[6] : <span>Loading...</span>} inches</span>
+                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 7 ? precipitationAveragePerDay[6] : <span>Loading...</span>} inches</span>
+                                    </div>
+                                </div>
+                                <div className="horizontal-divider"></div>
+                                <div className="seven-day">
+                                    <Moment className="date" date={daysOfWeek[7]} format="MM/DD/YYYY"></Moment>
+                                    <span className="seven-day-high">High  {parseInt(allWeather.daily.temperature_2m_max[7])}°F</span>
+                                    <span className="seven-day-low">Low  {parseInt(allWeather.daily.temperature_2m_min[7])}°F</span>
+                                    <div className="seven-day-precip">
+                                        <FontAwesomeIcon className="seven-day-droplet" icon={faDroplet}/>
+                                        <span style={{ paddingLeft: '10px' }}>{precipitationAveragePerDay.length >= 7 ? precipitationAveragePerDay[7] : <span>Loading...</span>} inches</span>
                                     </div>
                                 </div>
                             </div>
